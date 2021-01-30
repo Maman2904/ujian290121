@@ -6,19 +6,30 @@ import { data } from '../model/Model'
 
 class InputQuestion extends Component {
   constructor(props) {
-    super(props);
-
-    this.state = {value: ''}
+    super(props)
+    this.state = {jenis:""}
   }
 
-  handleChange(event) {
-    this.setState({value: []});
+  onChange = (event) => {
+  this.setState({jenis: event.target.value})
   }
 
-  ambilform =(form)=> {
-    this.setState({value: form})
+  ambilform(form){
+    switch (form){
+      case 'radio':
+        return <InputRadio/>
+      case  'checkbox':
+        return <InputCheckbox/>
+      case  'textarea':
+        return <InputTextarea/>
+
+      default : return
+
+    }
 
   }
+
+
 
 
   render() {
@@ -27,15 +38,18 @@ class InputQuestion extends Component {
         <div className="container">
           <div className="row">
             <div className="col">hasil</div>
-            <div className="col"><select class="form-select" aria-label="Default select example">
+            <div className="col">
+              <select class="form-select" aria-label="Default select example" onChange={this.onChange}>
                    <option selected >pilih pertanyaan</option>
                   <option value="radio">Radio</option>
                   <option value="checkbox">Checkbox</option>
                   <option value="textarea">TextArea</option>
                 </select>
+                { this.ambilform(this.state.jenis)}
+                
              
                
-                {data.map((value, i) => {
+                {/* {data.map((value, i) => {
                   if(value.type === "essay"){
                     return <InputTextarea form = {this.state.value}/>
                   } else if(value.type === "radio"){
@@ -45,11 +59,9 @@ class InputQuestion extends Component {
                   }
                    
 
-                })}
+                })} */}
                 
-              <div className="row">
-                form
-              </div>
+             
             </div>
           </div>
         </div>
@@ -58,3 +70,4 @@ class InputQuestion extends Component {
   }
 }
 export default InputQuestion;
+
