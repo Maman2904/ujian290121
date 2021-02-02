@@ -1,46 +1,55 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 class InputTextarea extends Component {
-    render() {
-        return (
-            <div>
-                <form>
-          <div className="mb-3">
-            <label for="soal" className="form-label">
-              Soal
-            </label>
-            <input
-              className="form-control"
-              id="soal"
-            />
-          </div>
+  constructor(props) {
+    super(props);
 
-          <div className="mb-3">
-            <label for="kunci" className="form-label">
-              Kunci
-            </label>
-            <input
-              className="form-control"
-              id="kunci"
-            />
-          </div>
+    this.state = {
+      type: "textarea",
+      soal: "",
+      kunci: "",
+      score: 0,
+    };
+  }
 
-          <div className="mb-3">
-            <label for="score" className="form-label">
-              Score
-            </label>
-            <input
-              className="form-control"
-              id="score"
-            />
-          </div>
-          
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
-            </div>
-        )
+  eventHandler = (event) =>{
+    let name = event.target.name
+    if(name==="score"){
+        this.setState({ [name]: parseInt(event.target.value) });
     }
+    this.setState({ [name]: event.target.value });
+
+  }
+  
+  createObjectData = () => {
+      
+    console.log(JSON.stringify(this.state))
+    this.props.onUpdateDatafromChild(this.state)
+  };
+
+  render() {
+    return (
+      <div>
+      <div className="mb-3">
+         
+          <label htmlFor="exampleFormControlInput4" className="form-label">Soal</label>
+          <input type="text" className="form-control" id="soal" name ="soal" placeholder="Masukan Soal" onChange={this.eventHandler} />
+      </div>
+      <div className="mb-3">
+          
+          <label htmlFor="exampleFormControlInput4" className="form-label">Kunci Jawaban</label>
+          <input type="text" className="form-control" id="kunci" name ="kunci" placeholder="Masukan Kunci Jawaban" onChange={this.eventHandler}/>
+      </div>
+      <div className="mb-3">
+          
+          <label htmlFor="exampleFormControlInput4" className="form-label">Score</label>
+          <input type="text" className="form-control" id="score" name ="score" placeholder="Masukan Score Nilai" onChange={this.eventHandler} />
+      </div>
+      <div className="mb-3">
+          <button className="primary" onClick={this.createObjectData } >Submit</button>
+      </div>
+  </div>
+    );
+  }
 }
 export default InputTextarea;
